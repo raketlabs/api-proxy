@@ -1,5 +1,7 @@
 package com.raketlabs.api.proxy.controller;
 
+import java.net.URI;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +17,8 @@ public class MainController {
 	@RequestMapping
 	public ResponseEntity proxy(@RequestParam(name = "q", required = true) String url) {
 		RestTemplate restTemplate = new RestTemplate();
-		ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
+		URI uri = URI.create(url);
+		ResponseEntity<String> response = restTemplate.getForEntity(uri, String.class);
 		HttpStatus status = response.getStatusCode();
 
 		if (status == HttpStatus.OK) {
